@@ -49,10 +49,10 @@ export function App() {
           <Route element={<LandingLayout />}>
             <Route path="/" element={<Navigate to="/landing" replace />} />
             <Route path="/landing" element={<Landing />} />
-            <Route path="/Gallery" element={<PhotoGallery />} />
-            <Route path="/CalculateWorkClient" element={<CalculateWorkClient />} />
-            <Route path="/CalculateProducts" element={<CalculateProducts />} />
-            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="/gallery" element={<PhotoGallery />} />
+            <Route path="/calculateWorkClient" element={<CalculateWorkClient />} />
+            <Route path="/calculateProducts" element={<CalculateProducts />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/share/video/:videoId" element={<SharedVideo />} />
             <Route path="/share/photos" element={<SharedPhotos />} />
           </Route>
