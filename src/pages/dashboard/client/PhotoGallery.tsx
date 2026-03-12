@@ -678,7 +678,7 @@ export function PhotoGallery() {
           onTouchEnd={handleTouchEnd}
         >
           {/* Top Bar */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/50 to-transparent">
+          <div className="flex items-center justify-between px-4 py-3 bg-linear-to-b from-black/50 to-transparent">
             {/* Zoom Controls */}
             <div className="flex items-center gap-2">
               <Button
@@ -690,7 +690,7 @@ export function PhotoGallery() {
               >
                 <ZoomOut className="h-4 w-4" />
               </Button>
-              <span className="text-white text-sm min-w-[48px] text-center">
+              <span className="text-white text-sm min-w-12 text-center">
                 {zoomLevel}x
               </span>
               <Button
@@ -777,7 +777,7 @@ export function PhotoGallery() {
           </div>
 
           {/* Bottom Bar - Photo Info */}
-          <div className="px-4 py-3 bg-gradient-to-t from-black/50 to-transparent">
+          <div className="px-4 py-3 bg-linear-to-t from-black/50 to-transparent">
             <p className="text-white text-center text-sm">
               {currentPhoto.title || `Photo ${viewingPhotoIndex + 1}`}
             </p>

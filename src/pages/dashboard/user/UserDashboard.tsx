@@ -219,7 +219,7 @@ export default function UserDashboard() {
             <Badge variant="outline">Monthly</Badge>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-75">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={finances}
@@ -297,7 +297,7 @@ export default function UserDashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-75">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={clientsByPlan}
@@ -343,7 +343,7 @@ export default function UserDashboard() {
               <CardDescription>Top users by share volume</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-[220px]">
+              <div className="h-55">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -420,7 +420,7 @@ export default function UserDashboard() {
                 <TableRow>
                   <TableHead>User</TableHead>
                   <TableHead>Plan</TableHead>
-                  <TableHead className="w-[200px]">Data Usage</TableHead>
+                  <TableHead className="w-50">Data Usage</TableHead>
                   <TableHead>Shares</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>

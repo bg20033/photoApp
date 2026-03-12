@@ -8,6 +8,7 @@ import { uid } from "./types";
 import CreateClientModal from "./CreateClients";
 import EditClientModal from "./EditClients";
 import DeleteClientModal from "./DeleteClients";
+import { formatDate } from "@/lib/utils";
 
 async function apiFetchClients(): Promise<Client[]> {
   try {
@@ -70,13 +71,7 @@ export default function UserManageClientsPage() {
    };
  }, []);
 
-  async function loadClients() {
-    setLoading(true);
-    const data = await apiFetchClients();
-    setClients(data);
-    setLoading(false);
-  }
-
+  
   function handleCreateSave(created: Client) {
     setClients((prev) => [created, ...prev]);
     setCreateModalOpen(false);
@@ -186,7 +181,7 @@ export default function UserManageClientsPage() {
               <span className="text-muted-foreground">Created</span>
               <span>
                 {client.createdAt
-                  ? new Date(client.createdAt).toLocaleString()
+                  ? formatDate(client.createdAt)
                   : "-"}
               </span>
             </div>
@@ -198,14 +193,14 @@ export default function UserManageClientsPage() {
 
   if (loading) {
     return (
-      <div className="p-4 md:p-6 max-w-[1600px] mx-auto flex items-center justify-center h-64">
+      <div className="p-4 md:p-6 max-w-400 mx-auto flex items-center justify-center h-64">
         <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-[1600px] mx-auto">
+    <div className="p-4 md:p-6 max-w-400 mx-auto">
       <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl md:text-2xl font-semibold">Manage Clients</h1>
         <motion.button
@@ -255,3 +250,4 @@ export default function UserManageClientsPage() {
     </div>
   );
 }
+

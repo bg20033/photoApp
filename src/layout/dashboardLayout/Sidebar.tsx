@@ -56,9 +56,10 @@ export default function Sidebar({
       { name: "Manage Clients", href: "/dashboard/manageclients", icon: HardDrive },
       { name: "Manage Users", href: "/dashboard/manageusers", icon: Settings },
       { name: "Event Planner", href: "/dashboard/eventplanner", icon: Calendar },
-      { name: "Roles and Plans", href: "/dashboard/rolesandplans", icon: Library },
+      { name: "Plans and Services", href: "/dashboard/plansandservices", icon: Library },
       { name: "Manage Teams", href: "/dashboard/manageteams", icon: Users },
       { name: "Storage", href: "/dashboard/storage", icon: HardDrive },
+      { name: "Calculate Work", href: "/dashboard/calculatework", icon: CreditCard },
     ],
   };
 
@@ -73,9 +74,9 @@ export default function Sidebar({
       onMouseLeave={() => setIsHovered(false)}
       className="relative bg-card h-full flex flex-col z-50 overflow-hidden "
     >
-      <div className="p-4 pt-3 ps-[18px] bg-muted/10">
+      <div className="p-4 pt-3 ps-4.5 bg-muted/10">
         <div className="flex items-center">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-primary/60 border border-primary/20 flex items-center justify-center shrink-0 text-primary-foreground font-bold">
+          <div className="w-9 h-9 rounded-lg bg-linear-to-br from-primary to-primary/60 border border-primary/20 flex items-center justify-center shrink-0 text-primary-foreground font-bold">
             AA
           </div>
           <AnimatePresence>
@@ -105,7 +106,7 @@ export default function Sidebar({
               to={item.href}
               className={({ isActive }) =>
                 cn(
-                  "group relative flex items-center h-11 px-[14px] rounded-xl transition-all duration-200",
+                  "group relative flex items-center h-11 px-3.5 rounded-xl transition-all duration-200",
                   isActive
                     ? "bg-primary text-primary-foreground "
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",

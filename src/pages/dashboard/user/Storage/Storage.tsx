@@ -31,6 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import EquipmentStorage from "./EquipmentStorage";
 
 // ============================================
 // DATA MODELS & TYPES
@@ -432,7 +433,7 @@ const PhotoPlaceholder: React.FC<{
 }> = ({ className, children }) => (
   <div
     className={cn(
-      "flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400",
+      "flex items-center justify-center bg-linear-to-br from-slate-100 to-slate-200 text-slate-400",
       className,
     )}
   >
@@ -1996,6 +1997,7 @@ const PartsManagement: React.FC<PartsManagementProps> = (props) => {
     null,
   );
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showGadgetsModal, setShowGadgetsModal] = useState(false);
 
   return (
     <div>
@@ -2007,6 +2009,12 @@ const PartsManagement: React.FC<PartsManagementProps> = (props) => {
           <TabsTrigger value="batteries">Batteries</TabsTrigger>
           <TabsTrigger value="accessories">Accessories</TabsTrigger>
         </TabsList>
+
+        <div className="flex justify-end mt-4 mb-2">
+          <Button onClick={() => setShowGadgetsModal(true)}>
+            + Gadgets & Stuff
+          </Button>
+        </div>
 
         <TabsContent value="bodies" className="space-y-4">
           <div className="flex justify-end">
@@ -2277,6 +2285,16 @@ const PartsManagement: React.FC<PartsManagementProps> = (props) => {
           </Table>
         </TabsContent>
       </Tabs>
+
+      <Modal
+        isOpen={showGadgetsModal}
+        onClose={() => setShowGadgetsModal(false)}
+        title="Gadgets & Stuff"
+      >
+        <div className="max-h-[80vh] overflow-y-auto">
+          <EquipmentStorage />
+        </div>
+      </Modal>
 
       {/* Add/Edit Modal */}
       <Modal
@@ -2678,6 +2696,9 @@ export default function Storage() {
           onDeleteAccessory={handleDeleteAccessory}
         />
       </Modal>
+      <div className="pt-10">
+        <EquipmentStorage />
+      </div>
     </div>
   );
 }

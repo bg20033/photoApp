@@ -8,8 +8,20 @@ export default function Topbar() {
           PhotoApp
         </a>
         <nav className="flex items-center gap-6">
-          <a href="/AboutUs" className="text-sm font-medium hover:text-primary">
+          {/* <a href="/AboutUs" className="text-sm font-medium hover:text-primary">
             About Us
+          </a> */}
+          <a
+            href="/CalculateWorkClient"
+            className="text-sm font-medium hover:text-primary"
+          >
+            Calculator
+          </a>
+          <a
+            href="/CalculateProducts"
+            className="text-sm font-medium hover:text-primary"
+          >
+            Products
           </a>
           <Button asChild size="sm">
             <a href="/Login">Login</a>

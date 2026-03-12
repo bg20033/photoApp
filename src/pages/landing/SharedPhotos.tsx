@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  useMemo,
-  useLayoutEffect,
-} from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   motion,
@@ -78,7 +71,7 @@ const generateSamplePhotos = (): Photo[] => {
 
 const samplePhotos: Photo[] = generateSamplePhotos();
 
-const VIEWPORT_BUFFER = 2; 
+const VIEWPORT_BUFFER = 2;
 
 interface PositionedPhoto extends Photo {
   x: number;
@@ -431,7 +424,7 @@ export default function SharedPhotos() {
   // Loading state
   if (loadingState === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/30 to-background">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-muted/30 to-background">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-10 w-10 animate-spin text-primary" />
           <p className="text-muted-foreground">Loading photos...</p>
@@ -443,7 +436,7 @@ export default function SharedPhotos() {
   // Error state
   if (loadingState === "error") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/30 to-background p-4">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-muted/30 to-background p-4">
         <Card className="w-full max-w-md">
           <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
             <div className="rounded-full bg-destructive/10 p-4">
@@ -465,7 +458,7 @@ export default function SharedPhotos() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-muted/30 to-background">
+    <div className="min-h-screen bg-linear-to-br from-muted/30 to-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-40">
         <div className="mx-auto max-w-7xl px-4 py-4">
@@ -645,14 +638,10 @@ export default function SharedPhotos() {
                 >
                   {/* Polaroid card styling */}
                   <div
-                    className="bg-white p-2 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer overflow-hidden"
-                    style={{
-                      boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
-                    }}
+                    className="bg-white p-2 pb-3 border border-gray-300 rounded-xl duration-300 cursor-pointer overflow-hidden"
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isDragging) {
-                        // Find original photo by originalId
                         const basePhoto = photos.find(
                           (p) => p.id === photo.originalId,
                         );
@@ -663,10 +652,13 @@ export default function SharedPhotos() {
                     <img
                       src={photo.url}
                       alt={photo.title || `Photo ${photo.id}`}
-                      className="w-full h-auto rounded select-none pointer-events-none"
+                      className="w-full h-auto rounded-md select-none pointer-events-none border border-gray-300"
                       draggable={false}
                       loading="lazy"
                     />
+                    <div className="p-2 pt-3 text-center">
+                      <h4 className="text-sm font-medium">{photo.title}</h4>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -696,7 +688,7 @@ export default function SharedPhotos() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-60 bg-black/95 flex items-center justify-center p-4"
             onClick={() => setSelectedPhoto(null)}
           >
             <motion.div
@@ -724,7 +716,7 @@ export default function SharedPhotos() {
               </Button>
 
               {/* Download button and title */}
-              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between rounded-b-lg bg-gradient-to-t from-black/80 to-transparent p-4">
+              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between rounded-b-lg bg-linear-to-t from-black/80 to-transparent p-4">
                 <p className="text-white text-sm font-medium">
                   {selectedPhoto.title || `Photo ${selectedPhoto.id}`}
                 </p>

@@ -7,6 +7,7 @@ import { uid } from "./types";
 import CreateUserModal from "./CreateUsers";
 import EditUserModal from "./EditUsers";
 import DeleteUserModal from "./DeleteUsers";
+import { formatDate } from "@/lib/utils";
 
 /* Sub-component to show expanded user details */
 function UserDetails({ user }: { user: User }) {
@@ -46,7 +47,7 @@ function UserDetails({ user }: { user: User }) {
             {user.createdAt && (
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 pb-3 border-b border-dashed">
                 <span className="text-muted-foreground">Created</span>
-                <span>{new Date(user.createdAt).toLocaleString()}</span>
+                <span>{formatDate(user.createdAt)}</span>
               </div>
             )}
           </div>
@@ -170,7 +171,7 @@ export default function AdminManageUsersPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-[1600px] mx-auto">
+    <div className="p-4 md:p-6 max-w-400 mx-auto">
       <header className="mb-6 flex justify-between items-center">
         <h1 className="text-xl md:text-2xl font-semibold">Manage Users</h1>
         <button
@@ -225,3 +226,4 @@ export default function AdminManageUsersPage() {
     </div>
   );
 }
+

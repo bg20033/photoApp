@@ -104,7 +104,7 @@ export default function SharedVideo() {
   // Loading state
   if (loadingState === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/30 to-background">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-muted/30 to-background">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-10 w-10 animate-spin text-primary" />
           <p className="text-muted-foreground">Loading video...</p>
@@ -116,7 +116,7 @@ export default function SharedVideo() {
   // Error state
   if (loadingState === "error") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/30 to-background p-4">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-muted/30 to-background p-4">
         <Card className="w-full max-w-md">
           <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
             <div className="rounded-full bg-destructive/10 p-4">
@@ -139,7 +139,7 @@ export default function SharedVideo() {
 
   // Success state - Video player
   return (
-    <div className="min-h-screen bg-gradient-to-br from-muted/30 to-background">
+    <div className="min-h-screen bg-linear-to-br from-muted/30 to-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl px-4 py-4">

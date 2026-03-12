@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Separator } from "@/components/ui/separator";
@@ -262,20 +262,7 @@ export default function EventPlanner() {
     return EVENT_TYPES.find((t) => t.value === type)?.color || "bg-gray-500";
   };
 
-  const getEventTypeLabel = (type: EventType): string => {
-    return EVENT_TYPES.find((t) => t.value === type)?.label || "Other";
-  };
 
-  const getTimeDisplay = (event: Event): string => {
-    if (event.timeSlotType === "custom" && event.startTime && event.endTime) {
-      return `${event.startTime} - ${event.endTime}`;
-    }
-    return (
-      TIME_SLOTS.find((t) => t.value === event.timeSlotType)
-        ?.label.split("(")[0]
-        .trim() || ""
-    );
-  };
 
   // Generate calendar days
   const calendarDays = useMemo(() => {
@@ -305,7 +292,7 @@ export default function EventPlanner() {
           <Button variant="outline" size="icon" onClick={prevMonth}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <div className="min-w-[150px] text-center">
+          <div className="min-w-37.5 text-center">
             <span className="text-lg font-semibold">{monthNames[month]}</span>
             <span className="text-lg text-muted-foreground ml-2">{year}</span>
           </div>

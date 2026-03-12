@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Menu } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 
 interface TopBarProps {
   onMenuToggle: () => void;
@@ -7,6 +7,10 @@ interface TopBarProps {
 }
 
 export default function TopBar({ onMenuToggle, isMobile }: TopBarProps) {
+  const navigateToLogout = () => {
+    // navigator.navigateTo("/logout")
+  };
+
   return (
     <header className="bg-card">
       <div className="flex h-12 items-center justify-between px-4">
@@ -23,11 +27,11 @@ export default function TopBar({ onMenuToggle, isMobile }: TopBarProps) {
         )}
         <div className="flex-1" />
         <div className="flex items-center gap-4">
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="outline" onClick={navigateToLogout}>
             Logout
           </Button>
         </div>
       </div>
     </header>
-  )
+  );
 }

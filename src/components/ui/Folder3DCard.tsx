@@ -30,7 +30,7 @@ export function Folder3DCard({
           <div className="absolute bottom-[99%] left-0 w-20 h-4 bg-amber-600 rounded-t-2xl" />
           {/* Angled corner - ::before simulation */}
           <div
-            className="absolute -top-[15px] left-[75.5px] w-4 h-4 bg-amber-600"
+            className="absolute -top-3.75 left-[75.5px] w-4 h-4 bg-amber-600"
             style={{
               clipPath: "polygon(0 35%, 0% 100%, 50% 100%)",
             }}
@@ -38,27 +38,27 @@ export function Folder3DCard({
         </div>
 
         {/* Layer 4 - Zinc 400 */}
-        <div className="work-4 absolute inset-1 bg-zinc-400 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-20deg)]" />
+        <div className="work-4 absolute inset-1 bg-zinc-400 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:transform-[rotateX(-20deg)]" />
 
         {/* Layer 3 - Zinc 300 */}
-        <div className="work-3 absolute inset-1 bg-zinc-300 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-30deg)]" />
+        <div className="work-3 absolute inset-1 bg-zinc-300 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:transform-[rotateX(-30deg)]" />
 
         {/* Layer 2 - Zinc 200 */}
-        <div className="work-2 absolute inset-1 bg-zinc-200 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-38deg)]" />
+        <div className="work-2 absolute inset-1 bg-zinc-200 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:transform-[rotateX(-38deg)]" />
 
         {/* Layer 1 - Front (amber gradient) with right folder tab and content */}
         <div
-          className="work-1 absolute bottom-0 w-full h-[156px] rounded-2xl transition-all ease duration-300 origin-bottom flex items-end overflow-hidden group-hover:[transform:rotateX(-46deg)_translateY(1px)]"
+          className="work-1 absolute bottom-0 w-full h-39 rounded-2xl transition-all ease duration-300 origin-bottom flex items-end overflow-hidden group-hover:transform-[rotateX(-46deg)_translateY(1px)]"
           style={{
             background: "linear-gradient(to top, #f59e0b, #fbbf24)",
             transformOrigin: "bottom",
           }}
         >
           {/* Right folder tab - ::after simulation */}
-          <div className="absolute bottom-[99%] right-0 w-[146px] h-4 bg-amber-400 rounded-t-2xl" />
+          <div className="absolute bottom-[99%] right-0 w-36.5 h-4 bg-amber-400 rounded-t-2xl" />
           {/* Angled corner - ::before simulation */}
           <div
-            className="absolute -top-[10px] right-[142px] w-3 h-3 bg-amber-400"
+            className="absolute -top-2.5 right-35.5 w-3 h-3 bg-amber-400"
             style={{
               clipPath: "polygon(100% 14%, 50% 100%, 100% 100%)",
             }}
