@@ -9,7 +9,6 @@ import EditUserModal from "./EditUsers";
 import DeleteUserModal from "./DeleteUsers";
 import { formatDate } from "@/lib/utils";
 
-/* Sub-component to show expanded user details */
 function UserDetails({ user }: { user: User }) {
   return (
     <div className="bg-background rounded-lg border p-6 md:p-8">
