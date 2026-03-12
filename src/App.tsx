@@ -25,7 +25,7 @@ const SharedVideo = lazy(() => import("@/pages/landing/SharedVideo"));
 const SharedPhotos = lazy(() => import("@/pages/landing/SharedPhotos"));
 const Login = lazy(() => import("@/pages/Login"));
 const Landing = lazy(() => import("@/pages/landing/Landing"));
-const ManageClientsIndex = lazy(() => import("@/pages/dashboard/user/ManageClients/Index"));
+//const ManageClientsIndex = lazy(() => import("@/pages/dashboard/user/ManageClients/Index"));
 const ManageUsersIndex = lazy(() => import("@/pages/dashboard/admin/manageUsers/Index"));
 const EventPlanner = lazy(() => import("@/pages/dashboard/user/EventPlanner"));
 const PlansAndServices = lazy(() => import("@/pages/dashboard/user/PlansAndServices"));
@@ -65,7 +65,7 @@ export function App() {
             <Route path="client" element={<ClientDashboard />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="manageUsers" element={<ManageUsersIndex />} />
-            <Route path="manageClients" element={<ManageClientsIndex />} />
+            {/* <Route path="manageClients" element={<ManageClientsIndex />} /> */}
             <Route path="eventPlanner" element={<EventPlanner />} />
             <Route path="plansAndServices" element={<PlansAndServices />} />
             <Route path="manageTeams" element={<ManageTeams />} />
