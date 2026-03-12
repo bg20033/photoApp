@@ -11,6 +11,9 @@ import {
   type ColumnFiltersState,
   type VisibilityState,
 } from "@tanstack/react-table";
+
+// Define GetRowIdFn locally since it's not exported from @tanstack/react-table
+type GetRowIdFn<TData> = (row: TData) => string;
 import {
   Table,
   TableCell,
@@ -34,7 +37,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   renderSubComponent?: (props: { row: TData }) => React.ReactNode;
-  getRowId?: (row: TData) => string;
+  getRowId?: GetRowIdFn<TData>;
   enableExpanding?: boolean;
   expandedRowId?: string | null;
   onExpandedChange?: (id: string | null) => void;
@@ -104,7 +107,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    getRowId: getRowId as any,
+    getRowId: getRowId,
     state: {
       sorting,
       columnFilters,

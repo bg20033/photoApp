@@ -9,8 +9,7 @@ import EditClientModal from "./EditClients";
 import DeleteClientModal from "./DeleteClients";
 import { formatDate } from "@/lib/utils";
 
-
- type Client = {
+type Client = {
   id: string;
   name: string;
   email: string;
@@ -56,31 +55,30 @@ export default function UserManageClientsPage() {
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [deletingClient, setDeletingClient] = useState<Client | null>(null);
 
- useEffect(() => {
-   let isMounted = true;
+  useEffect(() => {
+    let isMounted = true;
 
-   async function loadClients() {
-     setLoading(true);
-     try {
-       const data = await apiFetchClients();
-       if (isMounted) {
-         setClients(data);
-       }
-     } catch (error) {
-       console.error("Failed to load clients", error);
-     } finally {
-       if (isMounted) setLoading(false);
-     }
-   }
+    async function loadClients() {
+      setLoading(true);
+      try {
+        const data = await apiFetchClients();
+        if (isMounted) {
+          setClients(data);
+        }
+      } catch (error) {
+        console.error("Failed to load clients", error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
 
-   loadClients();
+    loadClients();
 
-   return () => {
-     isMounted = false; 
-   };
- }, []);
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
-  
   function handleCreateSave(created: Client) {
     setClients((prev) => [created, ...prev]);
     setCreateModalOpen(false);
@@ -189,9 +187,7 @@ export default function UserManageClientsPage() {
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
               <span className="text-muted-foreground">Created</span>
               <span>
-                {client.createdAt
-                  ? formatDate(client.createdAt)
-                  : "-"}
+                {client.createdAt ? formatDate(client.createdAt) : "-"}
               </span>
             </div>
           </div>
@@ -225,8 +221,8 @@ export default function UserManageClientsPage() {
 
       <DataTable
         columns={columns}
-        data={clients ?? []} 
-        getRowId={(row) => row.id}
+        data={clients ?? []}
+        getRowId={(row: Client) => row.id}
         enableExpanding
         expandedRowId={expandedRow}
         onExpandedChange={setExpandedRow}
@@ -259,4 +255,3 @@ export default function UserManageClientsPage() {
     </div>
   );
 }
-

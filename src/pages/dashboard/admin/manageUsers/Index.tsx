@@ -63,7 +63,7 @@ async function apiFetchUsers(): Promise<User[]> {
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
     return data as User[];
-  } catch (err) {
+  } catch (_err) {
     return [
       {
         id: uid("u_"),
@@ -185,7 +185,7 @@ export default function AdminManageUsersPage() {
       <DataTable
         columns={columns}
         data={users}
-        getRowId={(row) => row.id}
+        getRowId={(row: User) => row.id}
         enableExpanding
         expandedRowId={expandedRow}
         onExpandedChange={setExpandedRow}
@@ -226,4 +226,3 @@ export default function AdminManageUsersPage() {
     </div>
   );
 }
-

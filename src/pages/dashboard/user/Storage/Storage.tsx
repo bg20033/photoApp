@@ -2511,8 +2511,6 @@ export default function Storage() {
           </Button>
         </div>
       </div>
-
-      {/* Equipment Grid */}
       {setups.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-200 p-12">
           <PhotoPlaceholder className="mb-4 h-16 w-16 rounded-full" />
@@ -2575,7 +2573,6 @@ export default function Storage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 px-4 pb-4">
-                  {/* Compatibility Badges */}
                   <div className="flex flex-wrap gap-1">
                     <CompatibilityBadge status={mountMatch ? "valid" : "error"}>
                       Mount
@@ -2600,8 +2597,6 @@ export default function Storage() {
                       </>
                     )}
                   </div>
-
-                  {/* Reliability Indicator */}
                   <div>
                     <div className="mb-1 flex justify-between text-sm">
                       <span className="text-slate-600">Setup Completeness</span>
@@ -2609,14 +2604,11 @@ export default function Storage() {
                     </div>
                     <Progress value={scores.overall} className="h-2" />
                   </div>
-
-                  {/* Component Counts */}
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>💾 {setup.storageIds.length}</span>
                     <span>🔋 {setup.batteryIds.length}</span>
                     <span>🛠️ {setup.accessoryIds.length}</span>
                   </div>
-
                   {validation.errors.length > 0 && (
                     <Alert variant="destructive" className="py-2">
                       <AlertDescription className="text-xs">
@@ -2630,8 +2622,6 @@ export default function Storage() {
           })}
         </div>
       )}
-
-      {/* Equipment Builder Modal */}
       <EquipmentBuilder
         isOpen={isBuilderOpen}
         onClose={() => {
@@ -2651,8 +2641,6 @@ export default function Storage() {
         onAddAccessory={handleAddAccessory}
         editingSetup={editingSetup}
       />
-
-      {/* Equipment Detail Modal */}
       <EquipmentDetailModal
         setup={selectedSetup}
         isOpen={!!selectedSetup}
@@ -2666,8 +2654,6 @@ export default function Storage() {
         batteries={batteries}
         accessories={accessories}
       />
-
-      {/* Parts Management Modal */}
       <Modal
         isOpen={showPartsManagement}
         onClose={() => setShowPartsManagement(false)}

@@ -566,8 +566,6 @@ export default function EquipmentStorage() {
           ))}
         </div>
       )}
-
-      {/* Equipment Modal */}
       <Modal
         isOpen={isEquipmentModalOpen}
         onClose={() => setIsEquipmentModalOpen(false)}
@@ -630,8 +628,6 @@ export default function EquipmentStorage() {
           </div>
         </div>
       </Modal>
-
-      {/* Category Modal */}
       <Modal
         isOpen={isCategoryModalOpen}
         onClose={() => setIsCategoryModalOpen(false)}
@@ -667,8 +663,6 @@ export default function EquipmentStorage() {
           </div>
         </div>
       </Modal>
-
-      {/* Part Modal */}
       <Modal
         isOpen={isPartModalOpen}
         onClose={() => setIsPartModalOpen(false)}
@@ -708,8 +702,6 @@ export default function EquipmentStorage() {
           </div>
         </div>
       </Modal>
-
-      {/* Compatibility Modal */}
       <Modal
         isOpen={isCompatibilityModalOpen}
         onClose={() => setIsCompatibilityModalOpen(false)}
@@ -727,7 +719,7 @@ export default function EquipmentStorage() {
                   key={eq.id}
                   className="flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-muted"
                 >
-                  <input
+                  <Input
                     type="checkbox"
                     checked={
                       selectedPartForCompatibility?.compatibleEquipmentIds.includes(
