@@ -3,12 +3,21 @@ import { Plus, Edit, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
-import type { Client } from "./types";
 import { uid } from "./types";
 import CreateClientModal from "./CreateClients";
 import EditClientModal from "./EditClients";
 import DeleteClientModal from "./DeleteClients";
 import { formatDate } from "@/lib/utils";
+
+
+ type Client = {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  phone?: string;
+  createdAt?: string;
+};
 
 async function apiFetchClients(): Promise<Client[]> {
   try {
