@@ -54,11 +54,11 @@ export default function UploadMaterialPage() {
     setEditModalOpen(true);
   };
 
-  const handleSaveEdit = (updatedStorage: StorageData) => {
-    setStorageData((prev) =>
-      prev.map((s) => (s.id === updatedStorage.id ? updatedStorage : s)),
-    );
-  };
+  // const handleSaveEdit = (updatedStorage: StorageData) => {
+  //   setStorageData((prev) =>
+  //     prev.map((s) => (s.id === updatedStorage.id ? updatedStorage : s)),
+  //   );
+  // };
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this storage allocation?")) {

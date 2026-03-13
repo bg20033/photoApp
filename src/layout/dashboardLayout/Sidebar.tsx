@@ -57,11 +57,7 @@ export default function Sidebar({
       { name: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
       { name: "User Panel", href: "/dashboard/user", icon: ShieldCheck },
       { name: "Client Panel", href: "/dashboard/client", icon: ShieldCheck },
-      {
-        name: "Manage Clients",
-        href: "/dashboard/manageclients",
-        icon: HardDrive,
-      },
+      { name: "Manage Clients", href: "/dashboard/manageClientList", icon: Settings },
       { name: "Manage Users", href: "/dashboard/manageusers", icon: Settings },
       {
         name: "Event Planner",
@@ -98,7 +94,10 @@ export default function Sidebar({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative bg-card h-full flex flex-col z-50 overflow-hidden "
+      className={cn(
+        "relative bg-card flex flex-col z-50 overflow-hidden",
+        isMobile ? "h-screen" : "h-full",
+      )}
     >
       <div
         className="p-4 pt-3 ps-4.5 bg-muted/10"
