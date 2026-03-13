@@ -7,7 +7,7 @@ interface LandingLayoutProps {
 
 export default function LandingLayout({ children }: LandingLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pt-10">
       <Topbar />
       <main className="flex-1">{children ?? <Outlet />}</main>
     </div>

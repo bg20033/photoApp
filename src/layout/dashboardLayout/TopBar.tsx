@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface TopBarProps {
   onMenuToggle: () => void;
@@ -7,9 +8,9 @@ interface TopBarProps {
 }
 
 export default function TopBar({ onMenuToggle, isMobile }: TopBarProps) {
-  const navigateToLogout = () => {
-    // navigator.navigateTo("/logout")
-  };
+
+  const navigate = useNavigate();
+
 
   return (
     <header className="bg-card">
@@ -27,7 +28,7 @@ export default function TopBar({ onMenuToggle, isMobile }: TopBarProps) {
         )}
         <div className="flex-1" />
         <div className="flex items-center gap-4">
-          <Button size="sm" variant="outline" onClick={navigateToLogout}>
+          <Button size="sm" variant="outline" onClick={() => navigate("/login")}>
             Logout
           </Button>
         </div>

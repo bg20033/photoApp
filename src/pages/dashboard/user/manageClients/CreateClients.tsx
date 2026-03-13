@@ -8,6 +8,16 @@ interface CreateClientModalProps {
   onSave: (client: Client) => void;
 }
 
+function generatePassword(length: number = 12): string {
+  const charset =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+  return password;
+}
+
 async function apiCreateClient(payload: Partial<Client>): Promise<Client> {
   try {
     const res = await fetch("/api/user/clients", {
@@ -25,6 +35,7 @@ async function apiCreateClient(payload: Partial<Client>): Promise<Client> {
       name: payload.name || "Unnamed Client",
       email: payload.email || "no-reply@example.com",
       company: payload.company || "",
+      password: payload.password || "",
       phone: payload.phone || "",
       createdAt: new Date().toISOString(),
     };
@@ -39,21 +50,39 @@ export default function CreateClientModal({
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
-    company: "",
+    password: "",
     phone: "",
   });
+  const [autoGenerate, setAutoGenerate] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
+
+  function handleAutoGenerateToggle(checked: boolean) {
+    setAutoGenerate(checked);
+    if (checked) {
+      setForm((s) => ({ ...s, password: generatePassword() }));
+    } else {
+      setForm((s) => ({ ...s, password: "" }));
+    }
+  }
+
+  function handleGeneratePassword() {
+    setForm((s) => ({ ...s, password: generatePassword() }));
+  }
 
   async function handleSave() {
     if (!form.name.trim() || !form.email.trim()) {
       alert("Name and email are required.");
       return;
     }
+    if (!form.password.trim()) {
+      alert("Password is required.");
+      return;
+    }
     setSaving(true);
     try {
       const created = await apiCreateClient(form);
       onSave(created);
-      setForm({ name: "", email: "", company: "", phone: "" });
+      setForm({ name: "", email: "",  password: "", phone: "" });
     } catch (err) {
       console.error(err);
       alert("An error occurred while creating the client.");
@@ -64,7 +93,7 @@ export default function CreateClientModal({
 
   function handleClose() {
     if (!saving) {
-      setForm({ name: "", email: "", company: "", phone: "" });
+      setForm({ name: "", email: "",  password: "", phone: "" });
       onClose();
     }
   }
@@ -99,14 +128,42 @@ export default function CreateClientModal({
         </div>
 
         <div>
-          <label className="mb-1 block text-sm">Company</label>
-          <input
-            value={form.company}
-            onChange={(e) =>
-              setForm((s) => ({ ...s, company: e.target.value }))
-            }
-            className="w-full rounded-md border px-3 py-2"
-          />
+          <div className="mb-2 flex items-center gap-2">
+            <input
+              id="autoGeneratePassword"
+              type="checkbox"
+              checked={autoGenerate}
+              onChange={(e) => handleAutoGenerateToggle(e.target.checked)}
+              className="h-4 w-4"
+            />
+            <label htmlFor="autoGeneratePassword" className="text-sm">
+              Auto-generate password
+            </label>
+          </div>
+          <div className="flex gap-2">
+            <input
+              value={form.password}
+              onChange={(e) =>
+                setForm((s) => ({ ...s, password: e.target.value }))
+              }
+              className="w-full rounded-md border px-3 py-2"
+              type={autoGenerate ? "text" : "password"}
+              placeholder={
+                autoGenerate ? "Password will be generated" : "Enter password"
+              }
+              disabled={autoGenerate}
+            />
+            {autoGenerate && (
+              <button
+                type="button"
+                onClick={handleGeneratePassword}
+                className="rounded-md border px-3 py-2 text-sm hover:bg-gray-100"
+                title="Regenerate password"
+              >
+                ↻
+              </button>
+            )}
+          </div>
         </div>
 
         <div>

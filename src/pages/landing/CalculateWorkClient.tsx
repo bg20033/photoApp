@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 import {
   type PricingPeriod,
@@ -157,6 +158,7 @@ export default function CalculateWorkClient({
     name: "",
     email: "",
     phone: "",
+    message: "",
   });
 
   // ============================================
@@ -819,7 +821,6 @@ export default function CalculateWorkClient({
         </div>
       )}
 
-      {/* EMAIL MODAL */}
       <Modal
         isOpen={showEmailModal}
         onClose={() => setShowEmailModal(false)}
@@ -863,6 +864,18 @@ export default function CalculateWorkClient({
               onChange={(e) =>
                 setEmailForm({ ...emailForm, phone: e.target.value })
               }
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="message">Message (Optional)</Label>
+            <Textarea
+              id="message"
+              placeholder="Any additional questions or details..."
+              value={emailForm.message}
+              onChange={(e) =>
+                setEmailForm({ ...emailForm, message: e.target.value })
+              }
+              rows={3}
             />
           </div>
           <div className="pt-4">

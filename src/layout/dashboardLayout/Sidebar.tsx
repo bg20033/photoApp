@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
@@ -14,6 +14,8 @@ import {
   ChevronLeft,
   Menu,
   Calendar,
+  Quote,
+  Upload,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +37,8 @@ export default function Sidebar({
 
   const isExpanded = isHovered || isPinned || (isMobile && isOpen);
 
+  const navigate = useNavigate();
+
   const navItems = {
     user: [
       { name: "Dashboard", href: "/dashboard/user", icon: LayoutDashboard },
@@ -53,13 +57,35 @@ export default function Sidebar({
       { name: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
       { name: "User Panel", href: "/dashboard/user", icon: ShieldCheck },
       { name: "Client Panel", href: "/dashboard/client", icon: ShieldCheck },
-      { name: "Manage Clients", href: "/dashboard/manageclients", icon: HardDrive },
+      {
+        name: "Manage Clients",
+        href: "/dashboard/manageclients",
+        icon: HardDrive,
+      },
       { name: "Manage Users", href: "/dashboard/manageusers", icon: Settings },
-      { name: "Event Planner", href: "/dashboard/eventplanner", icon: Calendar },
-      { name: "Plans and Services", href: "/dashboard/plansandservices", icon: Library },
+      {
+        name: "Event Planner",
+        href: "/dashboard/eventplanner",
+        icon: Calendar,
+      },
+      {
+        name: "Plans and Services",
+        href: "/dashboard/plansandservices",
+        icon: Library,
+      },
       { name: "Manage Teams", href: "/dashboard/manageteams", icon: Users },
       { name: "Storage", href: "/dashboard/storage", icon: HardDrive },
-      { name: "Calculate Work", href: "/dashboard/calculatework", icon: CreditCard },
+      {
+        name: "Calculate Work",
+        href: "/dashboard/calculatework",
+        icon: CreditCard,
+      },
+      { name: "Manage Quotes", href: "/dashboard/managequotes", icon: Quote },
+      {
+        name: "Upload Material",
+        href: "/dashboard/uploadMaterial",
+        icon: Upload,
+      },
     ],
   };
 
@@ -74,7 +100,10 @@ export default function Sidebar({
       onMouseLeave={() => setIsHovered(false)}
       className="relative bg-card h-full flex flex-col z-50 overflow-hidden "
     >
-      <div className="p-4 pt-3 ps-4.5 bg-muted/10">
+      <div
+        className="p-4 pt-3 ps-4.5 bg-muted/10"
+        onClick={() => navigate("/dashboard/profile")}
+      >
         <div className="flex items-center">
           <div className="w-9 h-9 rounded-lg bg-linear-to-br from-primary to-primary/60 border border-primary/20 flex items-center justify-center shrink-0 text-primary-foreground font-bold">
             AA

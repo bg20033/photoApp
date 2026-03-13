@@ -8,6 +8,7 @@ import CreateUserModal from "./CreateUsers";
 import EditUserModal from "./EditUsers";
 import DeleteUserModal from "./DeleteUsers";
 import { formatDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 function UserDetails({ user }: { user: User }) {
   return (
@@ -86,8 +87,6 @@ export default function AdminManageUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-
-  // Modal States
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [deletingUser, setDeletingUser] = useState<User | null>(null);
@@ -173,14 +172,13 @@ export default function AdminManageUsersPage() {
     <div className="p-4 md:p-6 max-w-400 mx-auto">
       <header className="mb-6 flex justify-between items-center">
         <h1 className="text-xl md:text-2xl font-semibold">Manage Users</h1>
-        <button
+        <Button
           onClick={() => setCreateModalOpen(true)}
           className="bg-primary text-primary-foreground px-4 py-2 rounded-md flex items-center gap-2 hover:opacity-90 transition-opacity"
         >
           <Plus size={18} /> New user
-        </button>
+        </Button>
       </header>
-
       <DataTable
         columns={columns}
         data={users}
@@ -192,8 +190,6 @@ export default function AdminManageUsersPage() {
         searchable
         searchColumn="name"
       />
-
-      {/* Modals */}
       <CreateUserModal
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
@@ -202,7 +198,6 @@ export default function AdminManageUsersPage() {
           setCreateModalOpen(false);
         }}
       />
-
       <EditUserModal
         isOpen={!!editingUser}
         user={editingUser}
@@ -212,7 +207,6 @@ export default function AdminManageUsersPage() {
           setEditingUser(null);
         }}
       />
-
       <DeleteUserModal
         isOpen={!!deletingUser}
         user={deletingUser}

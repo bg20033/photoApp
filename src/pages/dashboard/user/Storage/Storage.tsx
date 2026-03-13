@@ -2488,7 +2488,7 @@ export default function Storage() {
     setAccessories(accessories.filter((a) => a.id !== id));
 
   return (
-    <div className="container mx-auto p-6">
+    <div className=" mx-auto p-5">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Equipment Storage</h1>

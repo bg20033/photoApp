@@ -3,20 +3,12 @@ import { Plus, Edit, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
-import { uid } from "./types";
+import { uid, type Client } from "./types";
 import CreateClientModal from "./CreateClients";
 import EditClientModal from "./EditClients";
 import DeleteClientModal from "./DeleteClients";
-import { formatDate } from "@/lib/utils";
-
-type Client = {
-  id: string;
-  name: string;
-  email: string;
-  company: string;
-  phone?: string;
-  createdAt?: string;
-};
+import ClientDetails from "./ClientDetails";
+import { Button } from "@/components/ui/button";
 
 async function apiFetchClients(): Promise<Client[]> {
   try {
@@ -96,6 +88,12 @@ export default function UserManageClientsPage() {
     }
   }
 
+  function handleToggleClientStatus(client: Client) {
+    setClients((prev) =>
+      prev.map((c) => (c.id === client.id ? { ...c, status: !c.status } : c)),
+    );
+  }
+
   const columns: ColumnDef<Client>[] = [
     {
       accessorKey: "name",
@@ -147,55 +145,6 @@ export default function UserManageClientsPage() {
     },
   ];
 
-  const renderClientDetails = ({ row: client }: { row: Client }) => (
-    <div className="bg-background rounded-lg border p-4 md:p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-        <div className="space-y-4">
-          <h4 className="font-semibold text-muted-foreground uppercase text-xs tracking-wider">
-            Client Details
-          </h4>
-          <div className="space-y-3">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Client ID</span>
-              <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
-                {client.id}
-              </span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Full Name</span>
-              <span className="font-medium">{client.name}</span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Email</span>
-              <span className="break-all">{client.email}</span>
-            </div>
-          </div>
-        </div>
-        <div className="space-y-4">
-          <h4 className="font-semibold text-muted-foreground uppercase text-xs tracking-wider">
-            Company Info
-          </h4>
-          <div className="space-y-3">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Company</span>
-              <span className="font-medium">{client.company}</span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Phone</span>
-              <span>{client.phone || "-"}</span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 pb-2 border-b border-dashed">
-              <span className="text-muted-foreground">Created</span>
-              <span>
-                {client.createdAt ? formatDate(client.createdAt) : "-"}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   if (loading) {
     return (
       <div className="p-4 md:p-6 max-w-400 mx-auto flex items-center justify-center h-64">
@@ -205,18 +154,16 @@ export default function UserManageClientsPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-400 mx-auto">
+    <div className="p-5 mx-auto">
       <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl md:text-2xl font-semibold">Manage Clients</h1>
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Button
           className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground font-medium hover:opacity-90 whitespace-nowrap"
           onClick={() => setCreateModalOpen(true)}
         >
           <Plus size={18} />
           New client
-        </motion.button>
+        </Button>
       </header>
 
       <DataTable
@@ -226,7 +173,12 @@ export default function UserManageClientsPage() {
         enableExpanding
         expandedRowId={expandedRow}
         onExpandedChange={setExpandedRow}
-        renderSubComponent={renderClientDetails}
+        renderSubComponent={({ row }) => (
+          <ClientDetails
+            client={row}
+            onToggleStatus={handleToggleClientStatus}
+          />
+        )}
         searchable
         searchColumn="name"
         searchPlaceholder="Search clients..."

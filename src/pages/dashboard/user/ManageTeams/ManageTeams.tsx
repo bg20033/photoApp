@@ -13,7 +13,6 @@ import { RoleModal } from "./modals";
 import { TeamTierModal } from "./modals";
 import { WorkerModal } from "./modals";
 
-// Helper functions for CRUD operations
 function createItem<T extends { id: string }>(
   setItems: React.Dispatch<React.SetStateAction<T[]>>,
   item: Omit<T, "id">,
@@ -145,7 +144,7 @@ export default function ManageTeams() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-5 space-y-6 ">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Manage Teams</h1>
         <p className="text-muted-foreground">

@@ -9,6 +9,16 @@ interface EditClientModalProps {
   onSave: (client: Client) => void;
 }
 
+function generatePassword(length: number = 12): string {
+  const charset =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+  return password;
+}
+
 async function apiUpdateClient(
   id: string,
   payload: Partial<Client>,
@@ -27,6 +37,7 @@ async function apiUpdateClient(
       name: payload.name || "Updated Client",
       email: payload.email || "updated@example.com",
       company: payload.company || "",
+      password: payload.password || "",
       phone: payload.phone || "",
       createdAt: new Date().toISOString(),
     };
@@ -42,7 +53,7 @@ export default function EditClientModal({
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
-    company: "",
+    password: "",
     phone: "",
   });
   const [saving, setSaving] = useState<boolean>(false);
@@ -52,7 +63,7 @@ export default function EditClientModal({
       setForm({
         name: client.name,
         email: client.email,
-        company: client.company,
+        password: client.password || "",
         phone: client.phone || "",
       });
     }
@@ -80,6 +91,10 @@ export default function EditClientModal({
     if (!saving) {
       onClose();
     }
+  }
+
+  function handleGeneratePassword() {
+    setForm((s) => ({ ...s, password: generatePassword() }));
   }
 
   if (!isOpen || !client) return null;
@@ -110,16 +125,27 @@ export default function EditClientModal({
             type="email"
           />
         </div>
-
         <div>
-          <label className="mb-1 block text-sm">Company</label>
-          <input
-            value={form.company}
-            onChange={(e) =>
-              setForm((s) => ({ ...s, company: e.target.value }))
-            }
-            className="w-full rounded-md border px-3 py-2"
-          />
+          <label className="mb-1 block text-sm">Password</label>
+          <div className="flex gap-2">
+            <input
+              value={form.password}
+              onChange={(e) =>
+                setForm((s) => ({ ...s, password: e.target.value }))
+              }
+              className="w-full rounded-md border px-3 py-2"
+              type="password"
+              placeholder="Enter new password or generate"
+            />
+            <button
+              type="button"
+              onClick={handleGeneratePassword}
+              className="rounded-md border px-3 py-2 text-sm hover:bg-gray-100"
+              title="Generate new password"
+            >
+              ↻
+            </button>
+          </div>
         </div>
 
         <div>
