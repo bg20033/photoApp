@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import LandingProfile from "./LandingProfile";
 import CaseStudySection from "./CaseStudySection";
+import SplitText from "@/components/splitText";
 
 const AgencyLanding = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -87,7 +88,7 @@ const AgencyLanding = () => {
     founded: "2021",
     location: "Global / Remote",
     teamSize: "10-15 Experts",
-    timeZone: "CET / EST Availability",
+    timeZone: "CET / EST ",
     email: "hello@studionexus.com",
     socials: ["LinkedIn", "X", "GitHub", "Dribbble"],
   };
@@ -238,9 +239,20 @@ const AgencyLanding = () => {
             className="max-w-4xl w-full space-y-8 rounded-3xl border border-slate-200 dark:border-zinc-800
       bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl p-8 md:p-12 shadow-2xl shadow-slate-200/50 dark:shadow-none"
           >
-            <h1 className="text-3xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-              {agency.tagline}
-            </h1>
+            
+            <SplitText
+              text={agency.tagline}
+              className="text-3xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight"
+              delay={50}
+              duration={1.25}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+            />
 
             <p className="text-lg md:text-xl text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
               {agency.about}
@@ -423,7 +435,7 @@ const AgencyLanding = () => {
           )}
         </div>
       </section>
-      <section className="border-t border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 py-24 relative overflow-hidden">
+      <section className="border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950 py-24 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-grid-pattern pointer-events-none" />
         <div className="max-w-5xl mx-auto px-4">
           <h1 className="text-3xl md:text-7xl pl-3 font-bold tracking-tight mb-5">
@@ -436,7 +448,7 @@ const AgencyLanding = () => {
                 key={idx}
                 className="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-2"
               >
-                <div className="p-6 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50/80 dark:bg-zinc-900/80 backdrop-blur-sm relative overflow-hidden flex flex-col items-start">
+                <div className="p-6 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900/80 backdrop-blur-sm relative overflow-hidden flex flex-col items-start">
                   <img
                     src={member.img}
                     alt={member.name}
@@ -458,7 +470,7 @@ const AgencyLanding = () => {
                     </p>
                   </div>
                 </div>
-                <div className="lg:col-span-2 p-10 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50/80 dark:bg-zinc-900 flex items-center">
+                <div className="lg:col-span-2 p-10 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 flex items-center">
                   <p className="text-lg leading-relaxed text-slate-700 dark:text-zinc-300">
                     {member.bio}
                   </p>
@@ -468,7 +480,7 @@ const AgencyLanding = () => {
           </div>
         </div>
       </section>
-      <div className="border-t">
+      <div className="">
         <LandingProfile />
       </div>
     </div>

@@ -180,7 +180,7 @@ const LandingProfile = () => {
               </text>
             </svg>
           </div>
-          <div className="screen-line-after flex border  border-edge">
+          <div className="screen-line-after flex border border-t-0  border-edge">
             <div className="shrink-0 border-r border-edge">
               <div className="mx-0.5 my-0.75">
                 <div className="relative isolate overflow-visible rounded-full">

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
-// 1. Define the shape of a single Case Study
 interface CaseStudy {
   id: string | number;
   client: string;
@@ -45,8 +44,8 @@ const CaseStudySection = ({ caseStudies }: CaseStudySectionProps) => {
           </div>
 
           {/* --- MOBILE RESPONSIVE TABS --- */}
-          <div className="w-full md:w-auto overflow-hidden">
-            <div className="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+          <div className="w-full md:w-auto overflow-x-auto">
+            <div className="flex flex-nowrap md:flex-wrap justify-start gap-2 overflow-x-scroll pb-2 md:pb-0 no-scrollbar">
               {categories.map((tab) => (
                 <button
                   key={tab}
