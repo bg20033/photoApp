@@ -5,7 +5,6 @@ import { VideoGallery } from "./VideoGallery";
 import { PhotoGallery } from "./PhotoGallery";
 import type { ClientUser } from "./types";
 
-// Mock client data - in real app, this would come from API/context
 const mockClient: ClientUser = {
   id: "client-001",
   name: "Sarah & Michael",
@@ -18,7 +17,6 @@ export default function ClientDashboard() {
 
   return (
     <div className="min-h-screen bg-background p-6 lg:p-8">
-      {/* Welcome Header */}
       <div className="mb-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>

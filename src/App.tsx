@@ -20,11 +20,11 @@ const UserDashboard = lazy(
   () => import("@/pages/dashboard/user/UserDashboard"),
 );
 const PhotoGallery = lazy(() => import("@/pages/landing/PhotoGalery"));
-const AboutUs = lazy(() => import("@/pages/landing/AboutUs"));
 const SharedVideo = lazy(() => import("@/pages/landing/SharedVideo"));
 const SharedPhotos = lazy(() => import("@/pages/landing/SharedPhotos"));
 const Login = lazy(() => import("@/pages/Login"));
-const Landing = lazy(() => import("@/pages/landing/Landing"));
+const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
+const Landing = lazy(() => import("@/pages/landing/Landing/Landing"));
 
 const ManageClientList = lazy(
   () => import("@/pages/dashboard/user/ManageClientList/Index"),
@@ -37,9 +37,6 @@ const ManageUsersIndex = lazy(
   () => import("@/pages/dashboard/admin/manageUsers/Index"),
 );
 const EventPlanner = lazy(() => import("@/pages/dashboard/user/EventPlanner"));
-const PlansAndServices = lazy(
-  () => import("@/pages/dashboard/user/PlansAndServices"),
-);
 const ManageTeams = lazy(
   () => import("@/pages/dashboard/user/ManageTeams/ManageTeams"),
 );
@@ -77,12 +74,12 @@ export function App() {
               element={<CalculateWorkClient />}
             />
             <Route path="/calculateProducts" element={<CalculateProducts />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/share/video/:videoId" element={<SharedVideo />} />
             <Route path="/share/photos" element={<SharedPhotos />} />
           </Route>
 
           <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Navigate to="user" replace />} />
@@ -94,7 +91,6 @@ export function App() {
             <Route path="manageQuotes" element={<ManageQuotesIndex />} />
             <Route path="profile" element={<Profile />} />
             <Route path="eventPlanner" element={<EventPlanner />} />
-            <Route path="plansAndServices" element={<PlansAndServices />} />
             <Route path="manageTeams" element={<ManageTeams />} />
             <Route path="storage" element={<Storage />} />
             <Route path="calculateWork" element={<CalculateWork />} />

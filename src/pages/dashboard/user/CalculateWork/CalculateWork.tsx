@@ -4,15 +4,11 @@ import {
   type TravelRule,
   type PricingPlan,
   type Service,
-  type Location,
   DEFAULT_PRICING_PERIODS,
   DEFAULT_TRAVEL_RULE,
   DEFAULT_PLANS,
   DEFAULT_SERVICES,
-  DEFAULT_LOCATIONS,
 } from "@/lib/pricing";
-
-import { BaseLocationCard } from "./BaseLocation";
 import { PricingPeriodsCard } from "./PricingPeriod";
 import { TravelRulesCard } from "./TravelRules";
 import { PlansCard } from "./Plans";
@@ -54,7 +50,6 @@ export default function CalculateWork() {
   const [travelRule, setTravelRule] = useState<TravelRule>(DEFAULT_TRAVEL_RULE);
   const [plans, setPlans] = useState<PricingPlan[]>(DEFAULT_PLANS);
   const [services, setServices] = useState<Service[]>(DEFAULT_SERVICES);
-  const [locations] = useState<Location[]>(DEFAULT_LOCATIONS);
   const [quantityProducts, setQuantityProducts] = useState<
     QuantityPricingProduct[]
   >(DEFAULT_QUANTITY_PRODUCTS);
@@ -175,7 +170,6 @@ export default function CalculateWork() {
         title="Wedding Pricing Configuration"
         description="Configure pricing settings for your photography business"
       />
-      <BaseLocationCard locations={locations} />
       <QuantityPricingCard
         products={quantityProducts}
         onAdd={() => {

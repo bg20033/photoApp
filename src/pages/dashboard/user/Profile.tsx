@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2,
@@ -11,7 +11,19 @@ import {
   AlertCircle,
   Image as ImageIcon,
   Palette,
+  MapPin,
+  Navigation,
 } from "lucide-react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import { type Location } from "./CalculateWork/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +31,77 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { BaseLocationCard } from "./CalculateWork/BaseLocation";
+
+// Fix Leaflet marker icons
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+});
+
+const createCustomIcon = (isBase: boolean = false) => {
+  return L.divIcon({
+    className: "custom-marker",
+    html: `<div style="background-color: ${
+      isBase ? "#3b82f6" : "#ef4444"
+    }; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
+  });
+};
+
+const DEFAULT_CENTER: [number, number] = [42.6629, 21.1655];
+
+const mapContainerStyle = {
+  width: "100%",
+  height: "300px",
+  borderRadius: "0.5rem",
+  border: "1px solid #eee",
+};
+
+function MapClickHandler({ onClick }: { onClick: (e: any) => void }) {
+  useMapEvents({ click: onClick });
+  return null;
+}
+
+// Reverse geocode function
+const reverseGeocode = async (lat: number, lng: number) => {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+      {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "PhotoApp/1.0",
+        },
+      },
+    );
+    if (!response.ok) throw new Error("Failed to fetch address");
+    const data = await response.json();
+
+    const addressParts = [];
+    if (data.address?.city) addressParts.push(data.address.city);
+    else if (data.address?.town) addressParts.push(data.address.town);
+    else if (data.address?.village) addressParts.push(data.address.village);
+    else if (data.address?.hamlet) addressParts.push(data.address.hamlet);
+
+    if (data.address?.country) addressParts.push(data.address.country);
+
+    return addressParts.length > 0
+      ? addressParts.join(", ")
+      : data.display_name?.split(",").slice(0, 2).join(",") ||
+          `Location at ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+  } catch (error) {
+    console.error("Reverse geocoding failed:", error);
+    return `Location at ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+  }
+};
 
 // Types
 interface DashboardSettings {
@@ -73,6 +156,37 @@ export default function ProfilePage() {
   );
   const [passwordSuccess, setPasswordSuccess] = useState(false);
 
+  // Location state for map
+  const [selectedLocation, setSelectedLocation] = useState<{
+    lat: number;
+    lng: number;
+    address: string;
+  } | null>(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [searchAddress, setSearchAddress] = useState("");
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
+
+  // Create locations array for BaseLocationCard
+  const locations: Location[] = useMemo(() => {
+    if (!selectedLocation) return [];
+    // Parse the address to extract city and country
+    const addressParts = selectedLocation.address.split(", ");
+    const city = addressParts[0] || selectedLocation.address;
+    const country = addressParts[addressParts.length - 1] || "Unknown";
+
+    return [
+      {
+        id: "base-location",
+        name: selectedLocation.address,
+        city,
+        country,
+        isBase: true,
+      },
+    ];
+  }, [selectedLocation]);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check for changes
@@ -81,6 +195,67 @@ export default function ProfilePage() {
       JSON.stringify(settings) !== JSON.stringify(originalSettings);
     setIsDirty(hasChanges);
   }, [settings, originalSettings]);
+
+  // Location handlers
+  const onMapClick = async (e: { latlng: { lat: number; lng: number } }) => {
+    const { lat, lng } = e.latlng;
+    const address = await reverseGeocode(lat, lng);
+    setSelectedLocation({ lat, lng, address });
+    setSearchAddress(address);
+  };
+
+  const handleGetCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude: lat, longitude: lng } = position.coords;
+        const address = await reverseGeocode(lat, lng);
+        setSelectedLocation({ lat, lng, address });
+        setSearchAddress(address);
+        setIsLocating(false);
+      },
+      () => {
+        alert("Unable to retrieve your location");
+        setIsLocating(false);
+      },
+    );
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchAddress(value);
+
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+
+    if (value.length < 3) return;
+
+    searchTimeoutRef.current = setTimeout(() => {
+      fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&limit=5&addressdetails=1&accept-language=en`,
+        {
+          headers: {
+            Accept: "application/json",
+            "User-Agent": "PhotoApp/1.0",
+          },
+        },
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            const first = data[0];
+            const lat = parseFloat(first.lat);
+            const lng = parseFloat(first.lon);
+            const cityName =
+              first.display_name?.split(",")[0]?.trim() || "Selected Location";
+            setSelectedLocation({ lat, lng, address: cityName });
+          }
+        })
+        .catch(console.error);
+    }, 500);
+  };
 
   // Handlers
   const handleBrandChange = (
@@ -165,7 +340,8 @@ export default function ProfilePage() {
   const handleSave = () => {
     setOriginalSettings(settings);
     setIsDirty(false);
-    // Here you would typically save to backend
+    // Save brand settings to localStorage for use in Landing page
+    localStorage.setItem("brandSettings", JSON.stringify(settings.brand));
     console.log("Saving settings:", settings);
   };
 
@@ -393,6 +569,74 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
               </div>
+              <Card className="glass-effect">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5" />
+                    Your Base Location
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Search for a location..."
+                      value={searchAddress}
+                      onChange={(e) => handleSearchChange(e.target.value)}
+                      className="flex-1 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    <Button
+                      variant="outline"
+                      size="xl"
+                      onClick={handleGetCurrentLocation}
+                      disabled={isLocating}
+                      title="Use my current location"
+                    >
+                      <Navigation
+                        className={`h-8 w-8 ${isLocating ? "animate-pulse" : ""}`}
+                      />
+                    </Button>
+                  </div>
+                  <div className="rounded-lg overflow-hidden border shadow-sm">
+                    <MapContainer
+                      center={
+                        selectedLocation
+                          ? [selectedLocation.lat, selectedLocation.lng]
+                          : DEFAULT_CENTER
+                      }
+                      zoom={selectedLocation ? 13 : 8}
+                      style={mapContainerStyle}
+                      scrollWheelZoom={true}
+                    >
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <MapClickHandler onClick={onMapClick} />
+                      {selectedLocation && (
+                        <Marker
+                          position={[
+                            selectedLocation.lat,
+                            selectedLocation.lng,
+                          ]}
+                          icon={createCustomIcon(false)}
+                        >
+                          <Popup>
+                            <div className="text-sm">
+                              <p className="font-medium">
+                                {selectedLocation.address}
+                              </p>
+                            </div>
+                          </Popup>
+                        </Marker>
+                      )}
+                    </MapContainer>
+                  </div>
+                  {selectedLocation && (
+                    <BaseLocationCard locations={locations} />
+                  )}
+                </CardContent>
+              </Card>
             </TabsContent>
           </motion.div>
         </AnimatePresence>

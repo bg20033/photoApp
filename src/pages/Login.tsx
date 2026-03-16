@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,9 +39,12 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <a href="#" className="text-sm text-primary hover:underline">
+                <Link
+                  to="/reset-password"
+                  className="text-sm text-primary hover:underline"
+                >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <Input
                 id="password"

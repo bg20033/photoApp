@@ -57,30 +57,25 @@ export default function Sidebar({
       { name: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
       { name: "User Panel", href: "/dashboard/user", icon: ShieldCheck },
       { name: "Client Panel", href: "/dashboard/client", icon: ShieldCheck },
-      { name: "Manage Clients", href: "/dashboard/manageClientList", icon: Settings },
       { name: "Manage Users", href: "/dashboard/manageusers", icon: Settings },
+      { name: "Manage Clients", href: "/dashboard/manageClientList", icon: Settings },
+      {
+        name: "Upload Material",
+        href: "/dashboard/uploadMaterial",
+        icon: Upload,
+      },
       {
         name: "Event Planner",
         href: "/dashboard/eventplanner",
         icon: Calendar,
       },
-      {
-        name: "Plans and Services",
-        href: "/dashboard/plansandservices",
-        icon: Library,
-      },
+      { name: "Manage Quotes", href: "/dashboard/managequotes", icon: Quote },    
+      { name: "Storage", href: "/dashboard/storage", icon: HardDrive }, 
       { name: "Manage Teams", href: "/dashboard/manageteams", icon: Users },
-      { name: "Storage", href: "/dashboard/storage", icon: HardDrive },
       {
         name: "Calculate Work",
         href: "/dashboard/calculatework",
         icon: CreditCard,
-      },
-      { name: "Manage Quotes", href: "/dashboard/managequotes", icon: Quote },
-      {
-        name: "Upload Material",
-        href: "/dashboard/uploadMaterial",
-        icon: Upload,
       },
     ],
   };

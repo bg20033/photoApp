@@ -191,12 +191,12 @@ export default function CalculateProducts({
   }, [quantities]);
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto my-10 p-4">
+    <div className="space-y-6 max-w-4xl md:mx-auto my-10 p-4 mx-2 bg-white border rounded-2xl">
       <h1>Photo Products & Prints (Bulk Pricing)</h1>
       <p className="text-xs text-muted-foreground">
         Add quantities to order. Bulk discounts apply automatically.
       </p>
-      <div className="border rounded-md overflow-hidden">
+      <div className="border rounded-md overflow-hidden ">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-muted/50">

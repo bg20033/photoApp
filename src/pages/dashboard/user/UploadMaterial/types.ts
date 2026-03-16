@@ -15,7 +15,7 @@ export interface Folder {
   name: string;
   files: UploadedFile[];
   createdAt: string;
-  expiration?: number; // in days
+  expiration?: number; 
   type?: "photo" | "video";
 }
 

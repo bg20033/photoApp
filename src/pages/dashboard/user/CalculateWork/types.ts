@@ -1,6 +1,3 @@
-// Types for CalculateWork module
-// Re-export types from @/lib/pricing and add custom types
-
 export type {
   PricingPeriod,
   TravelRule,
@@ -10,11 +7,10 @@ export type {
   Location,
 } from "@/lib/pricing";
 
-// Quantity-based pricing types
 export interface QuantityTier {
   id: string;
   minQty: number;
-  maxQty: number | null; // null means unlimited
+  maxQty: number | null; 
   unitPrice: number;
 }
 
@@ -27,7 +23,6 @@ export interface QuantityPricingProduct {
   enableDateBasedPricing?: boolean;
 }
 
-// Default quantity products
 export const DEFAULT_QUANTITY_PRODUCTS: QuantityPricingProduct[] = [
   {
     id: "1",
@@ -53,10 +48,6 @@ export const DEFAULT_QUANTITY_PRODUCTS: QuantityPricingProduct[] = [
     ],
   },
 ];
-
-// ============================================
-// ROLES AND WORKERS TYPES
-// ============================================
 
 export type IconType =
   | "User"
@@ -84,7 +75,6 @@ export interface Worker {
   roleIds: string[];
 }
 
-// Default roles
 export const DEFAULT_ROLES: Role[] = [
   { id: "1", name: "Photographer", icon: "Camera" },
   { id: "2", name: "Videographer", icon: "Camera" },
@@ -94,7 +84,6 @@ export const DEFAULT_ROLES: Role[] = [
   { id: "6", name: "Technician", icon: "Wrench" },
 ];
 
-// Default workers
 export const DEFAULT_WORKERS: Worker[] = [
   {
     id: "1",

@@ -21,7 +21,6 @@ import { Separator } from "@/components/ui/separator";
 import { Folder3DCard } from "@/components/ui/Folder3DCard";
 import type { Photo, PhotoFolder } from "./types";
 
-// Sample photo folders
 const sampleFolders: PhotoFolder[] = [
   {
     id: "folder-1",
@@ -441,7 +440,6 @@ export function PhotoGallery() {
   if (!currentFolderId) {
     return (
       <div className="space-y-6 ">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-semibold">Photo Gallery</h2>
@@ -469,12 +467,8 @@ export function PhotoGallery() {
     );
   }
 
-  // Photo grid view inside a folder
-  const currentFolder = sampleFolders.find((f) => f.id === currentFolderId);
-
   return (
     <div className="space-y-6">
-      {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm">
         {breadcrumb.map((item, index) => (
           <div key={item.id ?? "root"} className="flex items-center gap-2">
@@ -482,7 +476,14 @@ export function PhotoGallery() {
               <ChevronRight className="h-4 w-4 text-muted-foreground" />
             )}
             {index === breadcrumb.length - 1 ? (
-              <span className="font-medium">{item.name}</span>
+              <span className="font-medium">
+                {item.name}
+                {photos.length > 0 && (
+                  <span className="ml-2 text-muted-foreground">
+                    {photos.length} / {favoritePhotos.length} fav
+                  </span>
+                )}
+              </span>
             ) : (
               <button
                 onClick={navigateBack}
@@ -494,20 +495,12 @@ export function PhotoGallery() {
           </div>
         ))}
       </div>
-
-      {/* Header with back button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" onClick={navigateBack}>
             <ArrowLeft className="mr-1.5 h-4 w-4" />
             Back
           </Button>
-          <div>
-            <h2 className="text-xl font-semibold">{currentFolder?.name}</h2>
-            <p className="text-sm text-muted-foreground">
-              {photos.length} photos • {favoritePhotos.length} favorites
-            </p>
-          </div>
         </div>
         <div className="flex gap-2">
           {!isSelectionMode ? (

@@ -571,7 +571,7 @@ export default function SharedPhotos() {
                     : "Hold Space + Drag to pan"}
                 </p>
               </div>
-              <div className="rounded-lg bg-white/80 p-1.5 backdrop-blur-sm shadow border">
+              <div className="rounded-lg bg-white/80 p-1.5 backdrop-blur-sm mt-4 shadow border">
                 <p className="text-[10px] text-gray-500">
                   {visiblePhotos.length} photos visible
                 </p>
