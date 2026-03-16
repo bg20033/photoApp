@@ -757,11 +757,13 @@ export default function CalculateWorkClient({
 
       {/* CONDITIONAL BOTTOM BAR */}
       {hasSelectedData && (
-        <div className="fixed bottom-0  left-2 right-2 bg-linear-to-t from-background via-background/98 to-background/95 border-t border-x mx-auto rounded-t-2xl max-w-5xl backdrop-blur-sm p-4 z-50 animate-in slide-in-from-bottom-5 fade-in duration-300">
-          <div className="flex items-center justify-between gap-6">
-            <div className="flex items-center gap-6">
+        <div className="fixed bottom-0 left-0 right-0 md:left-2 md:right-2 bg-linear-to-t from-background via-background/98 to-background/95 border-t md:border-x mx-auto md:rounded-t-2xl max-w-5xl backdrop-blur-sm p-3 md:p-4 z-50 animate-in slide-in-from-bottom-5 fade-in duration-300">
+          {/* Switched to flex-col on mobile, flex-row on desktop */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-6">
+            {/* Top Row on Mobile / Left Side on Desktop */}
+            <div className="flex items-center justify-between md:justify-start gap-4 md:gap-6">
               <div className="flex flex-col">
-                <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+                <span className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground font-medium">
                   {weddingDate
                     ? new Date(weddingDate).toLocaleDateString("en-US", {
                         day: "numeric",
@@ -770,16 +772,16 @@ export default function CalculateWorkClient({
                       })
                     : "Date Pending"}
                 </span>
-                <span className="text-sm font-semibold truncate max-w-37.5">
+                <span className="text-sm font-semibold truncate max-w-35 md:max-w-37.5">
                   {selectedLocation?.address || "Location Pending"}
                 </span>
               </div>
 
               {addonsPrice > 0 && (
                 <>
-                  <div className="h-10 w-px bg-border" />
-                  <div className="flex flex-col">
-                    <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+                  <div className="hidden md:block h-10 w-px bg-border" />
+                  <div className="flex flex-col items-end md:items-start">
+                    <span className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground font-medium">
                       Add-ons
                     </span>
                     <span className="text-sm font-semibold">
@@ -790,12 +792,13 @@ export default function CalculateWorkClient({
               )}
             </div>
 
-            <div className="flex items-center gap-6 ">
-              <div className="flex flex-col items-end">
-                <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+            {/* Bottom Row on Mobile / Right Side on Desktop */}
+            <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-border/50">
+              <div className="flex flex-col items-start md:items-end">
+                <span className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground font-medium">
                   Total Estimate
                 </span>
-                <span className="text-3xl font-black text-gray-900">
+                <span className="text-2xl md:text-3xl font-black text-gray-900">
                   €
                   {subtotal.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
@@ -814,7 +817,8 @@ export default function CalculateWorkClient({
                 }
               >
                 <HugeiconsIcon icon={SentIcon} className="size-5 mr-2" />
-                Send Quote
+                <span className="hidden sm:inline">Send Quote</span>
+                <span className="sm:hidden">Send</span>
               </Button>
             </div>
           </div>
